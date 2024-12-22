@@ -9,7 +9,6 @@ on:
 jobs:
   codespell:
     runs-on: ubuntu-latest
-    continue-on-error: true  # Prevents the job from blocking the workflow
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -23,10 +22,14 @@ jobs:
       run: find . -type f -name "*.kod"
 
     - name: Run Codespell on .kod Files
+      id: codespell_check
       run: |
-        # Find .kod files and pass them to Codespell
-        find . -type f -name "*.kod" | xargs codespell
+        # Run Codespell and capture the output
+        find . -type f -name "*.kod" | xargs codespell > codespell_report.txt || true
+        cat codespell_report.txt
 
-    - name: Print Notice if Spelling Issues Found
-      if: ${{ failure() }}
-      run: echo "Codespell found spelling issues in the modified .kod files. Please review and fix them."
+    - name: Annotate Codespell Findings
+      if: failure()
+      run: |
+        echo "The following spelling issues were found:"
+        cat codespell_report.txt
