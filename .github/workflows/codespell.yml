@@ -21,18 +21,9 @@ jobs:
         python3 -m pip install --upgrade pip
         pip install codespell
 
-    - name: Get changed .kod files
-      id: changed-files
-      uses: tj-actions/changed-files@v36
-      with:
-        files: |
-          *.kod
-
     - name: Run Codespell
-      if: ${{ steps.changed-files.outputs.any_changed == 'true' }}
       run: |
-        echo "${{ steps.changed-files.outputs.files }}" > changed_files.txt
-        xargs -a changed_files.txt codespell --skip .git/ --ignore-words-list "whitelist,customword"
+        codespell
 
     - name: Print notice if spelling issues found
       if: ${{ failure() }}
