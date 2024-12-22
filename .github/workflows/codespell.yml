@@ -7,12 +7,19 @@ on:
   workflow_dispatch:
   
 jobs:
+ 
+
   codespell:
     runs-on: ubuntu-latest
     continue-on-error: true  # Prevents the job from blocking the workflow
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Install Codespell
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install codespell
 
     - name: Get changed .kod files
       id: changed-files
