@@ -22,12 +22,9 @@ jobs:
     - name: List .kod Files (Debugging Step)
       run: find . -type f -name "*.kod"
 
-    - name: Debug Codespell (Check if Files Are Scanned)
-      run: |
-        find . -type f -name "*.kod" | xargs codespell --debug
-
     - name: Run Codespell on .kod Files
       run: |
+        # Find .kod files and pass them to Codespell
         find . -type f -name "*.kod" | xargs codespell
 
     - name: Print Notice if Spelling Issues Found
