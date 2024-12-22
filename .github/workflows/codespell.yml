@@ -7,8 +7,6 @@ on:
   workflow_dispatch:
   
 jobs:
- 
-
   codespell:
     runs-on: ubuntu-latest
     continue-on-error: true  # Prevents the job from blocking the workflow
@@ -21,9 +19,10 @@ jobs:
         python3 -m pip install --upgrade pip
         pip install codespell
 
-    - name: Run Codespell
+    - name: Run Codespell on .kod Files
       run: |
-        codespell
+        # Find all .kod files and run codespell on them
+        find . -type f -name "*.kod" | xargs codespell
 
     - name: Print notice if spelling issues found
       if: ${{ failure() }}
