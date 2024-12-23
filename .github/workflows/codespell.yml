@@ -11,7 +11,6 @@ jobs:
   codespell:
     name: SpellCheck
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
       - name: Checkout repository
@@ -24,3 +23,4 @@ jobs:
         uses: codespell-project/actions-codespell@v2.1
         with:
           args: "*.kod"  # Check only .kod files
+        continue-on-error: true
