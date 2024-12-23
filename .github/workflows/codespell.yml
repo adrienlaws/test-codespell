@@ -13,21 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: List .kod Files (Debugging Step)
-        run: find . -type f -name "*.kod"
-
-      - name: Run Codespell on .kod Files
-        id: codespell_check
-        run: |
-          # Run Codespell and capture the output
-          find . -type f -name "*.kod" | xargs codespell > codespell_report.txt || true
-          cat codespell_report.txt
-
-      - name: Annotate Codespell Findings
-        if: steps.codespell_check.outcome == 'failure'
-        run: |
-          echo "The following spelling issues were found:"
-          cat codespell_report.txt
+      - name: Codespell with annotations
+        uses: codespell-project/actions-codespell@v2.1
+    
