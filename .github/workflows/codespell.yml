@@ -1,12 +1,12 @@
 name: Spelling Check
 
-on:
+on: 
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
-
+  
 jobs:
   codespell:
     name: SpellCheck
@@ -16,28 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4  # Checkout the repository files
 
-      - name: Get the list of modified .kod files
-        id: files
-        run: |
-          # Fetch the list of changed files in the current commit (for push) or pull request (for PR)
-          if [[ $GITHUB_EVENT_NAME == "pull_request" ]]; then
-            # For PR, get modified files from the PR diff
-            git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.kod$' > files_changed.txt
-          else
-            # For push, get modified files from the last commit
-            git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep '\.kod$' > files_changed.txt
-          fi
+      - name: List .kod files (Debugging step)
+        run: find . -type f -name "*.kod"  # Debugging step to confirm the files are there
 
-          # Output the modified files for debugging purposes
-          cat files_changed.txt
-
-      - name: Run Codespell on Modified Files
-        run: |
-          # Run codespell on the modified .kod files only
-          xargs -I {} codespell {} < files_changed.txt || true
-          
-      - name: Show codespell findings
-        if: failure()
-        run: |
-          echo "The following spelling issues were found:"
-          cat codespell_report.txt
+      - name: Codespell
+        uses: codespell-project/actions-codespell@v2.1
+        with:
+          args: "*.kod"  # Check only .kod files
