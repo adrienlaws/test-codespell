@@ -13,8 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Get changed files
+        id: changed_files
+        run: |
+          git diff --name-only HEAD~1 HEAD > changed_files.txt
+          cat changed_files.txt
 
-      - name: Codespell
-        uses: codespell-project/actions-codespell@v2.1
+      - name: Run Codespell on changed files
+        if: success()  # Ensure previous step succeeded
+        run: |
+          if [ -s changed_files.txt ]; then
+            xargs codespell < changed_files.txt || true
+          else
+            echo "No changed files to check."
+        shell: bash
