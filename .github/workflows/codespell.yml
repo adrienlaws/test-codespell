@@ -14,10 +14,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  # Checkout the repository files
-
-     # - name: List .kod files (Debugging step)
-     #   run: find . -type f -name "*.kod"  # Debugging step to confirm the files are there
+        uses: actions/checkout@v4
 
       - name: Codespell
         uses: codespell-project/actions-codespell@v2.1
