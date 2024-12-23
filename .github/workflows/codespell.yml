@@ -1,4 +1,5 @@
 name: Build and Code Check
+
 on: 
   push:
     branches: [ "main" ]
@@ -8,28 +9,25 @@ on:
   
 jobs:
   codespell:
+    name: Codespell with annotations
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Install Codespell
-      run: |
-        python3 -m pip install --upgrade pip
-        pip install codespell
+      - name: List .kod Files (Debugging Step)
+        run: find . -type f -name "*.kod"
 
-    - name: List .kod Files (Debugging Step)
-      run: find . -type f -name "*.kod"
+      - name: Run Codespell on .kod Files
+        id: codespell_check
+        run: |
+          # Run Codespell and capture the output
+          find . -type f -name "*.kod" | xargs codespell > codespell_report.txt || true
+          cat codespell_report.txt
 
-    - name: Run Codespell on .kod Files
-      id: codespell_check
-      run: |
-        # Run Codespell and capture the output
-        find . -type f -name "*.kod" | xargs codespell > codespell_report.txt || true
-        cat codespell_report.txt
-
-    - name: Annotate Codespell Findings
-      if: failure()
-      run: |
-        echo "The following spelling issues were found:"
-        cat codespell_report.txt
+      - name: Annotate Codespell Findings
+        if: steps.codespell_check.outcome == 'failure'
+        run: |
+          echo "The following spelling issues were found:"
+          cat codespell_report.txt
