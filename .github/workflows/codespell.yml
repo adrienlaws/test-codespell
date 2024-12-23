@@ -9,12 +9,18 @@ on:
   
 jobs:
   codespell:
-    name: Codespell with annotations
+    name: SpellCheck
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4  # Checkout the repository files
 
-      - name: Codespell with annotations
+      - name: List .kod files (Debugging step)
+        run: find . -type f -name "*.kod"  # Debugging step to confirm the files are there
+
+      - name: Codespell
         uses: codespell-project/actions-codespell@v2.1
+        with:
+          # Specify the path and file types to be checked
+          files: "*.kod"  # Make sure to include the .kod files
