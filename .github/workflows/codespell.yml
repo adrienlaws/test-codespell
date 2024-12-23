@@ -23,4 +23,3 @@ jobs:
         uses: codespell-project/actions-codespell@v2.1
         with:
           args: "*.kod"  # Check only .kod files
-          only_warn: 1
