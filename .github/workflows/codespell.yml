@@ -22,5 +22,4 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@v2.1
         with:
-          # Specify the path and file types to be checked
-          files: "*.kod"  # Make sure to include the .kod files
+          args: "*.kod"  # Check only .kod files
