@@ -18,5 +18,3 @@ jobs:
 
       - name: Codespell
         uses: codespell-project/actions-codespell@v2.1
-        with:
-          args: "*.kod"  # Check only .kod files
