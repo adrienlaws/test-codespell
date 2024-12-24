@@ -19,4 +19,5 @@ jobs:
       - name: Run Codespell
         uses: codespell-project/actions-codespell@v2
         with:
-          ignore_words_file: /kod/.ignore
+          path: kod
+          ignore_words_file: .ignore.txt
