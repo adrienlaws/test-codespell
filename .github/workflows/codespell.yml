@@ -1,4 +1,4 @@
-name: .kod spellcheck
+name: .
 
 on: 
   push:
@@ -17,9 +17,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Codespell
-        run: |
-          # Navigate to the /kod/ directory
-          cd kod
-          
-          # Run Codespell with specified options
-          codespell -c --count --ignore-words=ignore.txt
+        uses: codespell-project/actions-codespell@v2
+        with:
+          ignore_words_file: /kod/.ignore
