@@ -20,4 +20,3 @@ jobs:
         uses: codespell-project/actions-codespell@v2
         with:
           path: kod
-          ignore_words_file: .ignore.txt
